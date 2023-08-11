@@ -1,0 +1,103 @@
+﻿@model Presentation.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<form asp-controller="Home" method="post">
+
+    <div class=" d-flex justify-content-end mb-4">
+        <div id="toolbar" class="btn-group">
+            <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Unblock" title="Unblock"><img src="~/icons/check.svg" /></button>
+            <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Block" title="Block"><img src="~/icons/x-circle.svg"/></button>
+            <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Delete" title="Delete"><img src="~/icons/trash.svg" /></button>
+        </div>
+    </div>
+
+    <table id="users" class="table">
+        <thead>
+            <tr>
+                <th><input id="checkall" type="checkbox"/></th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Last Login At</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="checkboxes">
+            @Html.EditorFor(x => x.Users)
+        </tbody>
+    </table>
+
+    @if (Model.UsersCount > Model.ViewCount)
+    {
+        <div class=" d-flex justify-content-end mt-4">
+            <div id="toolbar" class="btn-group">
+                <a id="showMoreBtn" class="btn btn-secondary ml-auto" asp-action="ShowMore" asp-controller="Home" asp-route-viewcount="@Model.ViewCount">Show more</a>
+            </div>
+        </div>
+    }
+
+    @Html.HiddenFor(x => x.UsersCount)
+    @Html.HiddenFor(x => x.ViewCount)
+    @Html.HiddenFor(x => x.ViewCountStep)
+</form>
+
+
+@if (TempData["ErrorMEssage"] != null)
+{
+    <div class="form-outline mb-4">
+        <span class="text-danger">@TempData["ErrorMessage"]</span>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+        function toggleChecked(status) {
+            $("#checkboxes input[type='checkbox']").each(function () {
+                $(this).prop("checked", status);
+            });
+        }
+
+        function checkCheckboxes() {
+            var status = true
+            $("#checkboxes input[type='checkbox']").each(function () {
+                if ($(this).prop('checked') == false) {
+                    status = false
+                    return false
+                }
+            })
+
+            if (!status || status == false)
+                return false
+
+            return true
+        }
+
+        $(document).ready(function () {
+
+            var checkAllBox = $("#checkall");
+
+            checkAllBox.prop('checked', false);
+
+            checkAllBox.click(function () {
+                var status = checkAllBox.prop('checked');
+                toggleChecked(status);
+            });
+
+            $("#checkboxes input").each(function () {
+                $(this).click(function () {
+                    var checkAllBox = $("#checkall")
+                    var status = checkCheckboxes()
+                    checkAllBox.prop('checked', status)
+                })
+            })
+
+            var status = checkCheckboxes()
+            checkAllBox.prop('checked', status)
+        });
+
+    </script>
+}
