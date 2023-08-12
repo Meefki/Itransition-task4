@@ -1,0 +1,5 @@
+services:
+    type: web
+    name: task4
+    repo: https://github.com/Meefki/Itransition-task4.git
+    dockerCommand: docker-compose up -d --build
