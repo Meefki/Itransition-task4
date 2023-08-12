@@ -85,11 +85,12 @@ internal class Program
 
     private static Serilog.ILogger CreateSerilogLogger(IConfiguration config)
     {
-        var seqServerUrl = config["Serilog:SeqServerUrl"];
+        //var seqServerUrl = config["Serilog:SeqServerUrl"];
         return new LoggerConfiguration()
             .MinimumLevel.Verbose()
             .Enrich.FromLogContext()
-            .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http://seq" : seqServerUrl)
+            .WriteTo.Console()
+            //.WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http://seq" : seqServerUrl)
             .ReadFrom.Configuration(config)
             .CreateLogger();
     }
