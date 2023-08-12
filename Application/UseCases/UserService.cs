@@ -40,7 +40,7 @@ public class UserService : IUserService
         User user = await _userRepository.GetByEmailAsync(new(email)) ?? throw new ArgumentException($"Cannot find a user with a specified email ({email})", nameof(email));
         if (user.IsBlocked) throw new InvalidOperationException("User is blocked! Unblock this user via another account.");
         if (user.Password != password) throw new ArgumentException($"Wrong password for user ({user.Id})", nameof(password));
-        user.WriteLastLogin(DateTime.Now);
+        user.WriteLastLogin(DateTime.UtcNow);
         await _userRepository.UpdateAsync(new List<User>() { user });
     }
 

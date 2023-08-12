@@ -25,7 +25,7 @@ public class User
         Password = password;
         Email = email;
 
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
         LastLoginAt = CreatedAt;
     }
 
