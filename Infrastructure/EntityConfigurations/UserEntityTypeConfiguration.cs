@@ -15,7 +15,6 @@ internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
             .HasConversion(userId => userId.ToString(),
                 value => Guid.Parse(value));
 
-
         builder.OwnsOne(x => x.Email, 
             options =>
             {
