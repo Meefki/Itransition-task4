@@ -10,6 +10,11 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        if (builder.Environment.IsProduction())
+        {
+            builder.Configuration.AddJsonFile("/etc/secrets/appSecrets.json", false, true);
+        }
+
         IConfiguration config = builder.Configuration;
         Log.Logger = CreateSerilogLogger(config);
 
