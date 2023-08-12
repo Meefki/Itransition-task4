@@ -44,6 +44,9 @@
     @Html.HiddenFor(x => x.ViewCountStep)
 </form>
 
+<div class="d-flex justify-content-end">
+    <span>@Model.UsersCount / @Model.ViewCount</span>
+</div>
 
 @if (TempData["ErrorMEssage"] != null)
 {
