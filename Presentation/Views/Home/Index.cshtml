@@ -5,11 +5,14 @@
 
 <form asp-controller="Home" method="post">
 
-    <div class=" d-flex justify-content-end mb-4">
-        <div id="toolbar" class="btn-group">
-            <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Unblock" title="Unblock"><img src="~/icons/check.svg" /></button>
-            <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Block" title="Block"><img src="~/icons/x-circle.svg"/></button>
-            <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Delete" title="Delete"><img src="~/icons/trash.svg" /></button>
+    <div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex">@(Model.UsersCount < Model.ViewCount ? Model.UsersCount : Model.ViewCount) / @Model.UsersCount</div>
+            <div id="toolbar" class="btn-group">
+                <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Unblock" title="Unblock"><img src="~/icons/check.svg" /></button>
+                <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Block" title="Block"><img src="~/icons/x-circle.svg" /></button>
+                <button class="btn btn-outline-secondary ml-auto" type="submit" formaction="Delete" title="Delete"><img src="~/icons/trash.svg" /></button>
+            </div>
         </div>
     </div>
 
@@ -45,10 +48,6 @@
     @Html.HiddenFor(x => x.ViewCount)
     @Html.HiddenFor(x => x.ViewCountStep)
 </form>
-
-<div class="d-flex justify-content-end">
-    <span>@Model.UsersCount / @Model.ViewCount</span>
-</div>
 
 @if (TempData["ErrorMEssage"] != null)
 {
