@@ -1,7 +1,7 @@
 ﻿@model Presentation.Models.UserViewModel
 <tr>
     <td>@Html.CheckBoxFor(x => x.IsSelected)</td>
-    <td>@Model.Id</td> @Html.HiddenFor(x => x.Id)
+    <td class="text-nowrap">@Model.Id</td> @Html.HiddenFor(x => x.Id)
     <td>@Model.Name</td> @Html.HiddenFor(x => x.Name)
     <td>@Model.Email</td> @Html.HiddenFor(x => x.Email)
     <td>@Model.CreatedAt</td> @Html.HiddenFor(x => x.CreatedAt)

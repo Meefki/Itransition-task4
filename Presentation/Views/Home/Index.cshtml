@@ -13,22 +13,24 @@
         </div>
     </div>
 
-    <table id="users" class="table">
-        <thead>
-            <tr>
-                <th><input id="checkall" type="checkbox"/></th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Created At</th>
-                <th>Last Login At</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="checkboxes">
-            @Html.EditorFor(x => x.Users)
-        </tbody>
-    </table>
+    <div style="overflow-x:auto">
+        <table id="users" class="table">
+            <thead>
+                <tr>
+                    <th><input id="checkall" type="checkbox"/></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                    <th>Last Login At</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="checkboxes">
+                @Html.EditorFor(x => x.Users)
+            </tbody>
+        </table>
+    </div>
 
     @if (Model.UsersCount > Model.ViewCount)
     {
