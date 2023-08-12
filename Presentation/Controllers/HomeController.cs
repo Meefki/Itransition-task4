@@ -26,12 +26,11 @@ namespace Presentation.Controllers
             _userRepository = userRepository;
         }
 
-        public async Task<IActionResult> Index(HomeViewModel? homeVM = null, int? viewCount = null)
+        public async Task<IActionResult> Index(HomeViewModel? homeVM = null)
         {
             homeVM ??= new();
-            viewCount ??= homeVM?.ViewCount;
             homeVM!.Users = 
-                (await _userRepository.TakeUsers(viewCount!.Value, x => x.CreatedAt))
+                (await _userRepository.TakeUsers(homeVM.ViewCount, x => x.CreatedAt))
                 .Select(x => 
                     new UserViewModel()
                     {
@@ -47,6 +46,7 @@ namespace Presentation.Controllers
 
             var user = await IdentityHelper.GetAuthenticatedUserAsync(HttpContext, _userRepository);
             @ViewData["LoggedUserName"] = user?.Name;
+
             return View(homeVM);
         }
 
@@ -59,11 +59,6 @@ namespace Presentation.Controllers
                     homeVM.Users
                         .Where(u => u.IsSelected)
                         .Select(u => u.Id));
-
-                //foreach (var userVM in homeVM.Users.Where(u => u.IsSelected))
-                //{
-                //    userVM.IsBlocked = true;
-                //}
 
                 User? user = await IdentityHelper.GetAuthenticatedUserAsync(HttpContext, _userRepository);
                 if (user is null || user.IsBlocked)
@@ -87,11 +82,6 @@ namespace Presentation.Controllers
                     homeVM.Users
                         .Where(u => u.IsSelected)
                         .Select(u => u.Id));
-
-                //foreach (var user in homeVM.Users.Where(u => u.IsSelected))
-                //{
-                //    user.IsBlocked = false;
-                //}
             }
             catch (Exception ex)
             {
@@ -112,11 +102,6 @@ namespace Presentation.Controllers
                         .ToList();
                 await _userService.Delete(usersForDeleting.Select(u => u.Id));
 
-                foreach (var userVM in usersForDeleting)
-                {
-                    homeVM.Users.Remove(userVM);
-                }
-
                 User? user = await IdentityHelper.GetAuthenticatedUserAsync(HttpContext, _userRepository);
                 if (user is null || user.IsBlocked)
                     return RedirectToAction(nameof(IdentityController.Login), "Identity");
@@ -134,7 +119,7 @@ namespace Presentation.Controllers
         {
             homeVM.ViewCount += homeVM.ViewCountStep;
 
-            return RedirectToAction(nameof(HomeController.Index), homeVM.ViewCount);
+            return RedirectToAction(nameof(HomeController.Index), new { viewCount = homeVM.ViewCount });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
