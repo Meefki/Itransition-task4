@@ -89,7 +89,7 @@ namespace Presentation.Controllers
                 TempData["ErrorMessage"] = ex.Message;
             }
 
-            return RedirectToAction(nameof(HomeController.Index), , new { viewCount = homeVM.ViewCount });
+            return RedirectToAction(nameof(HomeController.Index), new { viewCount = homeVM.ViewCount });
         }
 
         [HttpPost]
