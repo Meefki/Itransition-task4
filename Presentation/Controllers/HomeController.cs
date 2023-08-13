@@ -70,7 +70,7 @@ namespace Presentation.Controllers
                 TempData["ErrorMessage"] = ex.Message;
             }
 
-            return RedirectToAction(nameof(HomeController.Index));
+            return RedirectToAction(nameof(HomeController.Index), new { viewCount = homeVM.ViewCount });
         }
 
         [HttpPost]
@@ -89,7 +89,7 @@ namespace Presentation.Controllers
                 TempData["ErrorMessage"] = ex.Message;
             }
 
-            return RedirectToAction(nameof(HomeController.Index));
+            return RedirectToAction(nameof(HomeController.Index), , new { viewCount = homeVM.ViewCount });
         }
 
         [HttpPost]
@@ -112,7 +112,7 @@ namespace Presentation.Controllers
                 TempData["ErrorMessage"] = ex.Message;
             }
 
-            return RedirectToAction(nameof(HomeController.Index));
+            return RedirectToAction(nameof(HomeController.Index), new { viewCount = homeVM.ViewCount });
         }
 
         public IActionResult ShowMore(HomeViewModel homeVM)
